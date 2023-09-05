@@ -2,26 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@400;900&family=Urbanist:wght@500&display=swap");
+
+@layer utilities {
+  .testimag1 {
+    background-image: url("../public//signin.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .testimag2 {
+    background-image: url("../public//signup.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+  .testimg3 {
+    background-image: url("../public//forgot.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  @media (max-width: 768px) {
+    .formimg {
+      background-image: url("../public//signup.jpg");
+    }
+    .formimg2 {
+      background-image: url("../public//signin.jpg");
+    }
+    .formimg3 {
+      background-image: url("../public//forgot.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+}
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #5dc5cb, #5934ae);
+  border-radius: 10px;
+}
+
+.pulsating-text {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.active {
+  background-color: red;
 }
