@@ -47,7 +47,7 @@ const Hero = () => {
           <div className="flex justify-center w-full text-md md:text-xl text-white text-center font-mont mb-8">
             <p className="w-full md:w-1/2">
               Immerse yourself in timeless stories, profound teachings, and
-              captivating narratives. Explore new worlds, reflect on life's
+              captivating narratives. Explore new worlds, reflect on various
               mysteries, and experience the power of the word of God.
             </p>
           </div>

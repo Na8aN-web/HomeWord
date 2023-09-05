@@ -220,7 +220,7 @@ const Game = () => {
                     Welcome to the HomeTrivia game!
                   </p>
                   <p className="font-mont text-[18px] w-full md:w:-1/2 my-8">
-                    This is a scripture guessing game where you're given a
+                    This is a scripture guessing game where you&apos;re,  given a
                     scripture and you have to guess what book, chapter and verse
                     the passage was taken from
                   </p>

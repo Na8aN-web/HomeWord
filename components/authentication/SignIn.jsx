@@ -78,7 +78,7 @@ const SignIn = ({ formData, setFormData, handleToggleForm }) => {
           </button>
         </div>
         <h5 className="md:text-black text-white flex justify-center text-[15px] items-center font-mont p-2">
-          Don't have an account?{" "}
+          {"Don't have an account?"}
           <div className="">
             <h4
               onClick={handleToggleForm}
