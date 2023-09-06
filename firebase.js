@@ -4,14 +4,14 @@ import { getApps, getApp } from "firebase/app";
 import "firebase/database"
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  databaseURL: process.env.FIREBASE_DATABASE_URL,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.MEASUREMENT_ID,
+  apiKey: "AIzaSyBLHD9sCFV_WgfKdcNK8gJLeYU1dG79B0M",
+  authDomain: "readn-8c472.firebaseapp.com",
+  databaseURL: "https://readn-8c472-default-rtdb.firebaseio.com",
+  projectId: "readn-8c472",
+  storageBucket: "readn-8c472.appspot.com",
+  messagingSenderId: "1049182835415",
+  appId: "1:1049182835415:web:af75bbcaed84cdf24a1692",
+  measurementId: "G-FMNQ26GYD9"
 };
 
 
