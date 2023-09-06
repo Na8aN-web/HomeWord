@@ -13,14 +13,14 @@ const ProtectedRoute = ({ children }) => {
 
       if (user) {
         setAuthenticated(true); // User is authenticated
-      } else {
-        setAuthenticated(false); // User is not authenticated
-        router.push('/authentication/AuthLayout'); // Redirect to the login page
+      }else if (!user && !authenticated) {
+        // Only redirect if the user is not authenticated and we haven't already redirected
+        router.push('/authentication/AuthLayout');
       }
     });
 
     return () => unsubscribe();
-  }, [router]);
+  }, []);
 
   if (loading) {
     // Render a loading indicator while checking authentication state

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { FaBible, FaSearch, FaBookOpen, FaGamepad } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
 import Link from "next/link";
@@ -12,10 +12,10 @@ const Sidebar = ({ isSidebarOpen }) => {
     return router.pathname === pathname ? " border-s-4 border-x-white" : "";
   };
 
+
    const handleSignOut = async () => {
     try {
       await auth.signOut();
-      router.push("/authentication/AuthLayout");
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -83,9 +83,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           <li>
             <Link
               href="#"
-              onClick={() => {
-                handleSignOut();
-              }}
+              onClick={handleSignOut}
             >
               <h6 className="text-white  hover:bg-red-500 hover:font-semibold py-1 flex items-center w-full">
                 <span className="flex items-center p-3 font-mont">
