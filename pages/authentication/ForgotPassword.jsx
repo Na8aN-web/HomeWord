@@ -4,6 +4,8 @@ import { forgotPassword } from "../../store/authSlice/authActions";
 import AnimatedPlaceholderInput from "../../components/AnimatedPlaceholder";
 import Link from "next/link";
 import { clearForgotPasswordState } from "@/store/authSlice/ForgotPasswordSlice";
+import forgot from "../../public/forgot.jpg";
+import Image from "next/image";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -21,14 +23,21 @@ function ForgotPassword() {
     dispatch(clearForgotPasswordState());
   }, [dispatch]);
   return (
-    <div className=" h-screen w-full flex flex-row overflow-y-scroll custom-scrollbar">
+    <div className=" h-screen w-full flex flex-row overflow-y-scroll custom-scrollbar relative">
+      <Image
+        src={forgot}
+        alt="Background Image"
+        layout="fill"
+        objectFit="cover"
+        className="block md:hidden"
+      />
       <form
-        className="formimg3 flex flex-col items-center justify-center w-full md:w-1/2 h-screen"
+        className=" flex flex-col items-center justify-center w-full md:w-1/2 h-screen overlay"
         onSubmit={handleForgotPassword}
       >
-        <h1 className="sm:text-4xl text-xl font-bold font-mont my-8">
+        <h1 className="sm:text-4xl text-xl font-semibold font-mont my-8 text-center">
           <span className="bg-white md:bg-gradient-to-r from-[#f9aaab] to-[#face72]  text-transparent bg-clip-text">
-            Forgot Password?
+            FORGOT PASSWORD?
           </span>
         </h1>
         <div className="w-[80%]">
@@ -69,7 +78,9 @@ function ForgotPassword() {
           </button>
         </div>
       </form>
-      <div className="w-1/2 testimg3 hidden md:block"></div>
+      <div className="w-1/2  hidden md:block relative">
+        <Image src={forgot} alt="this" layout="fill" objectFit="cover" />
+      </div>
     </div>
   );
 }

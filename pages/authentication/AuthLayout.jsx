@@ -4,6 +4,9 @@ import SignUp from "@/components/authentication/SignUp";
 import SignIn from "@/components/authentication/SignIn";
 import { setError } from "@/store/authSlice/signupSlice";
 import { useDispatch } from "react-redux";
+import BgOne from '../../public/signup.jpg';
+import BgTwo from '../../public/signin.jpg';
+import Image from "next/image";
 
 const AuthLayout = () => {
   const dispatch = useDispatch();
@@ -110,15 +113,16 @@ const AuthLayout = () => {
           transition={{ duration: 0.5 }}
           className={`w-1/2 ${
             isMobile && "hidden"
-          } h-full absolute z-[4] text-white right-0 bottom-0 md:top-0 testimag2 md:flex flex-col items-center justify-center gap-4 overflow-hidden`}
-        ></motion.div>
+          } h-full absolute z-[4] text-white right-0 bottom-0 md:top-0  md:flex flex-col items-center justify-center gap-4 overflow-hidden`}
+        ><Image src={BgOne} alt='bgone' objectFit="cover" layout='fill'/></motion.div>
         <motion.div
           animate={isOpen ? { x: "-100%", zIndex: 3 } : {}}
           transition={{ duration: 0.5 }}
           className={`w-1/2 h-full ${
             isMobile && "hidden"
-          } absolute z-[1] testimag1 right-0 bottom-0 md:top-0 md:flex flex-col items-center justify-center gap-4 overflow-hidden1`}
-        ></motion.div>
+          } absolute z-[1]  right-0 bottom-0 md:top-0 md:flex flex-col items-center justify-center gap-4 overflow-hidden1`}
+        >
+        <Image src={BgTwo} alt='bgtwo' objectFit="cover"  layout='fill'/></motion.div>
       </div>
     </div>
   );

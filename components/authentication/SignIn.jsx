@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/store/authSlice/authActions";
 import AnimatedPlaceholderInput from "../AnimatedPlaceholder";
 import { useRouter } from "next/router";
-
 import Link from "next/link";
+import Image from "next/image";
+import BGone from '../../public/signin.jpg'
 
 const SignIn = ({ formData, setFormData, handleToggleForm }) => {
   const router = useRouter();
@@ -33,17 +34,24 @@ const SignIn = ({ formData, setFormData, handleToggleForm }) => {
   };
 
   return (
-    <div className=" h-screen w-full overflow-y-scroll custom-scrollbar">
-      <form className="formimg2 flex flex-col items-center justify-center h-screen">
-        <h1 className="sm:text-4xl text-xl font-bold font-mont my-8">
+    <div className=" h-screen w-full overflow-y-scroll custom-scrollbar relative">
+      <Image
+        src={BGone}
+        alt="Background Image"
+        layout="fill"
+        objectFit="cover"
+        className="block md:hidden"
+      />
+      <form className="flex flex-col items-center justify-center h-screen overlay">
+        <h1 className="sm:text-4xl text-xl font-semibold font-mont my-8 text-center">
           <span className="bg-white md:bg-gradient-to-r from-[#5dc5cb] to-[#6568c9]  text-transparent bg-clip-text">
-            Welcome Back
+            WELCOME BACK
           </span>
         </h1>
-        <div className="w-[80%]">
+        <div className="w-[80%] ">
           <AnimatedPlaceholderInput
             type="email"
-            label="Email Address"
+            label="Email"
             id="email"
             name="email"
             value={formData.email}

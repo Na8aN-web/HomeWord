@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AnimatedPlaceholderInput from "../AnimatedPlaceholder";
 import { signup } from "@/store/authSlice/authActions";
 import { setError } from "@/store/authSlice/signupSlice";
+import Image from "next/image";
+import BGone from '../../public/signup.jpg'
 
 const SignUp = ({ formData, setFormData, handleToggleForm }) => {
   const dispatch = useDispatch();
@@ -30,14 +32,21 @@ const SignUp = ({ formData, setFormData, handleToggleForm }) => {
   console.log(success);
 
   return (
-    <div className=" h-screen w-full overflow-y-scroll custom-scrollbar">
+    <div className=" h-screen w-full overflow-y-scroll custom-scrollbar relative ">
+      <Image
+        src={BGone}
+        alt="Background Image"
+        layout="fill"
+        objectFit="cover"
+        className="block md:hidden"
+      />
       <form
         onSubmit={handleSignUp}
-        className="formimg flex flex-col items-center justify-center h-screen"
+        className=" flex flex-col items-center justify-center h-screen overlay"
       >
-        <h1 className="sm:text-4xl text-xl font-bold font-mont">
+        <h1 className="sm:text-4xl text-xl font-semibold font-mont text-center">
           <span className="bg-white md:bg-gradient-to-r from-[#5934ae] to-[#5dc5cb] text-transparent bg-clip-text">
-            Create an Account
+            CREATE AN ACCOUNT
           </span>
         </h1>
         <h6 className="text-white md:text-gray-800  font-mont font-light sm:text-base text-sm w-[350px] text-center p-8">
@@ -66,7 +75,7 @@ const SignUp = ({ formData, setFormData, handleToggleForm }) => {
           />
           <AnimatedPlaceholderInput
             type="email"
-            label="Email Address"
+            label="Email"
             id="email"
             name="email"
             value={formData.email}

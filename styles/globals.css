@@ -5,34 +5,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@400;900&family=Urbanist:wght@500&display=swap");
 
 @layer utilities {
-  .testimag1 {
-    background-image: url("../public//signin.jpg");
-    background-size: cover;
-    background-position: center;
-  }
-
-  .testimag2 {
-    background-image: url("../public//signup.jpg");
-    background-size: cover;
-    background-position: center;
-  }
-  .testimg3 {
-    background-image: url("../public//forgot.jpg");
-    background-size: cover;
-    background-position: center;
-  }
+ 
 
   @media (max-width: 768px) {
-    .formimg {
-      background-image: url("../public//signup.jpg");
-    }
-    .formimg2 {
-      background-image: url("../public//signin.jpg");
-    }
-    .formimg3 {
-      background-image: url("../public//forgot.jpg");
-      background-repeat: no-repeat;
-      background-size: cover;
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); /* Adjust the opacity here */
+      z-index: 1; /* Ensure the overlay is on top of the background image */
     }
   }
 }
