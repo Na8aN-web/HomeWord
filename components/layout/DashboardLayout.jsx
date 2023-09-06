@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../navbar/DashboardNavbar";
 import Sidebar from "../Sidebar";
 
-const DashboardLayout = ({ children, title }) => {
+const DashboardLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {

@@ -29,7 +29,6 @@ const SignUp = ({ formData, setFormData, handleToggleForm }) => {
     }));
   };
 
-  console.log(success);
 
   return (
     <div className=" h-screen w-full overflow-y-scroll custom-scrollbar relative ">

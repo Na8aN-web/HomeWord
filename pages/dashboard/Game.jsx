@@ -185,8 +185,6 @@ const Game = () => {
 
       setGameEnded(true);
 
-      console.log("Highscore saved successfully!");
-
       // After saving the highscore, fetch the updated highscores and update the state
       fetchHighscores();
     } catch (error) {
@@ -199,8 +197,6 @@ const Game = () => {
       saveHighscore(totalScore);
     }
   }, [round, totalScore]);
-
-  console.log(highscores);
 
   return (
     <ProtectedRoute>

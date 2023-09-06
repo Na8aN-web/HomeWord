@@ -1,14 +1,12 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { FaBible, FaSearch, FaBookOpen, FaGamepad } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { auth } from "../firebase"; 
+import { auth } from "../firebase";
 
 const Sidebar = ({ isSidebarOpen }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const isActive = (pathname) => {
     return router.pathname === pathname ? " border-s-4 border-x-white" : "";
@@ -17,7 +15,7 @@ const Sidebar = ({ isSidebarOpen }) => {
    const handleSignOut = async () => {
     try {
       await auth.signOut();
-      router.push("/authentication/AuthLayout"); 
+      router.push("/authentication/AuthLayout");
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -83,7 +81,12 @@ const Sidebar = ({ isSidebarOpen }) => {
           </li>
 
           <li>
-            <Link href="#" onClick={handleSignOut}>
+            <Link
+              href="#"
+              onClick={() => {
+                handleSignOut();
+              }}
+            >
               <h6 className="text-white  hover:bg-red-500 hover:font-semibold py-1 flex items-center w-full">
                 <span className="flex items-center p-3 font-mont">
                   <FiLogIn className="mr-2" />{" "}

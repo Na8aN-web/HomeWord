@@ -24,13 +24,9 @@ const loginSlice = createSlice({
     setLoginLoading: (state) => {
       state.isLoading = true;
     },
-    SignOut: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.isLoading = false;
-    },
+   
   },
 });
 
-export const { setLogin, setLoginError, setLoginLoading, SignOut } = loginSlice.actions;
+export const { setLogin, setLoginError, setLoginLoading } = loginSlice.actions;
 export default loginSlice.reducer;

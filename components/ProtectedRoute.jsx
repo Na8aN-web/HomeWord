@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [router]);
 
   if (loading) {
     // Render a loading indicator while checking authentication state

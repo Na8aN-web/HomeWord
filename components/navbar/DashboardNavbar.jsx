@@ -8,7 +8,6 @@ import VerseOfTheDayModal from "../modals/VerseOfThdDay";
 
 const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const user = useSelector((state) => state.login.user);
-  console.log(user);
   const [verse, setVerse] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,7 +51,6 @@ const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  console.log(verse);
 
   return (
     <div className="flex items-center bg-[#f4f4f4] border-b-[1px] border-b-gray-800 p-4 h-24 relative">
