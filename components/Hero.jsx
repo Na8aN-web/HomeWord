@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import HeroImg from "../public/hero2.jpg";
 import { FiLogIn } from "react-icons/fi";
 import Link from "next/link";
+import Image from "next/image";
 import Typed from "typed.js";
 
 const Hero = () => {
@@ -35,10 +36,14 @@ const Hero = () => {
   };
   return (
     <>
-      <div
-        className="relative h-[100vh] flex items-center justify-center bg-cover bg-center w-full pt-16"
-        style={{ backgroundImage: `url(${HeroImg.src})` }}
-      >
+      <div className="relative h-[100vh] flex items-center justify-center bg-cover bg-center w-full pt-16">
+        <Image
+          src={HeroImg}
+          alt="Background Image"
+          layout="fill"
+          objectFit="cover"
+         
+        />
         <div className="absolute inset-0 bg-black opacity-60"></div>
         <div className="text-white text-center z-10 p-6 md:p-20">
           <h1 className="text-4xl md:text-6xl font-light mb-4 font-mont">
