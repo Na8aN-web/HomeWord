@@ -75,7 +75,7 @@ const SearchComponent = () => {
             transition={{ duration: 0.3 }} // Animation duration
             className=" p-8 md:p-2"
           >
-            <h1 className="font-mont text-[24px] my-8">
+            <h1 className="font-mont text-[20px] md:text-[24px] my-8">
               Search for various texts in the bible and get all related
               passages!
             </h1>
@@ -84,7 +84,7 @@ const SearchComponent = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Enter search term"
-              className="font-mont px-8 py-2 w-96 focus:outline-none"
+              className="font-mont px-8 py-2 w-52 md:w-96 focus:outline-none"
               initial="initial"
               whileFocus="focus"
             />

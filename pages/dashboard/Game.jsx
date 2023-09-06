@@ -16,6 +16,7 @@ import {
   limitToLast,
 } from "firebase/database";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { auth } from "../../firebase";
 
 const Game = () => {
   const [verse, setVerse] = useState("");
@@ -174,10 +175,13 @@ const Game = () => {
       // Get the current timestamp using serverTimestamp()
       const timestamp = serverTimestamp();
 
+      const fullName = auth.currentUser.displayName;
+      const firstName = fullName.split(" ")[0];
       // Create a highscore object
       const highscoreData = {
         score: score,
         timestamp: timestamp,
+        name: firstName,
       };
 
       // Save the highscore entry to the database
@@ -216,7 +220,7 @@ const Game = () => {
                     Welcome to the HomeTrivia game!
                   </p>
                   <p className="font-mont text-[18px] w-full md:w:-1/2 my-8">
-                    This is a scripture guessing game where you&apos;re,  given a
+                    This is a scripture guessing game where you&apos;re, given a
                     scripture and you have to guess what book, chapter and verse
                     the passage was taken from
                   </p>
@@ -281,8 +285,9 @@ const Game = () => {
                         <table className="table table-striped table-bordered table-responsive w-full mt-4">
                           <thead className="bg-[#f4f4f4] ">
                             <tr>
-                              <th className="text-black p-4">SCORE</th>
-                              <th className="text-black p-4">DATE</th>
+                              <th className="text-black p-1 md:p-4 text-[13px] md:text-[16px]">NAME</th>
+                              <th className="text-black p-1 md:p-4 text-[13px] md:text-[16px]">SCORE</th>
+                              <th className="text-black p-1 md:p-4 text-[13px] md:text-[16px]">DATE</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -291,8 +296,9 @@ const Game = () => {
                                 key={index}
                                 className="text-white text-center hover:bg-[#f4f4f4] hover:text-black"
                               >
-                                <td className="p-4">{scoreData.score}</td>
-                                <td className="p-4">
+                                <td className="p-1 md:p-4 text-[13px] md:text-[16px]">{scoreData.name}</td>
+                                <td className="p-1 md:p-4 text-[13px] md:text-[16px]">{scoreData.score}</td>
+                                <td className="p-1 md:p-4 text-[13px] md:text-[16px]">
                                   {scoreData.formattedDate}
                                 </td>
                               </tr>

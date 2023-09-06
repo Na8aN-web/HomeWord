@@ -15,7 +15,7 @@ const SignUp = ({ formData, setFormData, handleToggleForm }) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (formData.password === formData.repeatPassword) {
-      dispatch(signup(formData.email, formData.password));
+      dispatch(signup(formData.email, formData.password, formData.firstName, formData.lastname));
     } else {
       dispatch(setError("Passwords don't match"));
     }

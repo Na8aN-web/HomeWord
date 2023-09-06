@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import HeroImg from "../public/hero2.jpg";
-import { FiLogIn } from "react-icons/fi";
+import { FiLogIn, FiInfo } from "react-icons/fi";
 import Link from "next/link";
 import Image from "next/image";
 import Typed from "typed.js";
+import AboutModal from "./modals/AboutModal";
 
 const Hero = () => {
   const el = useRef(null);
   const typed = useRef(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const options = {
@@ -26,6 +28,13 @@ const Hero = () => {
       typed.current.destroy();
     };
   }, []);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   const handleStartExploring = () => {
     setIsLoading(true);
@@ -42,7 +51,6 @@ const Hero = () => {
           alt="Background Image"
           layout="fill"
           objectFit="cover"
-         
         />
         <div className="absolute inset-0 bg-black opacity-60"></div>
         <div className="text-white text-center z-10 p-6 md:p-20">
@@ -57,7 +65,7 @@ const Hero = () => {
             </p>
           </div>
 
-          <div className="animate-fade-in-up delay-300 flex justify-center">
+          <div className="animate-fade-in-up delay-300 flex flex-col items-center md:flex-row gap-4 justify-center">
             <Link href="/authentication/AuthLayout">
               {isLoading ? (
                 <button
@@ -76,7 +84,17 @@ const Hero = () => {
                 </button>
               )}
             </Link>
+            <Link href="#">
+              <button
+                className="bg-gray-800 hover:bg-gray-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-mont flex items-center space-x-2"
+                onClick={openModal}
+              >
+                <FiInfo size={20} />
+                <span>About</span>
+              </button>
+            </Link>
           </div>
+          <AboutModal isOpen={isOpen} onClose={closeModal} />
         </div>
       </div>
     </>

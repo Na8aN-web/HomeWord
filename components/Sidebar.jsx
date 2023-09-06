@@ -16,6 +16,7 @@ const Sidebar = ({ isSidebarOpen }) => {
 
    const handleSignOut = async () => {
     dispatch(logout());
+    localStorage.setItem('isAuthenticated','false');
   };
 
   return (

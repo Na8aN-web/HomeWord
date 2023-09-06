@@ -112,7 +112,7 @@ const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
             onClick={openModal}
           >
             <h1 className="font-medium text-[14px] md:text-[20px]">
-              VERSE OF THE DAY
+              VOTD
             </h1>
           </motion.button>
         </motion.div>

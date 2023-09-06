@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const AnimatedPlaceholderInput = ({
   label,
@@ -9,20 +9,32 @@ const AnimatedPlaceholderInput = ({
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const [hasContent, setHasContent] = useState(Boolean(value));
 
   const handleFocus = () => {
     setIsFocused(true);
   };
 
   const handleBlur = () => {
-    setIsFocused(value !== "");
+    setIsFocused(Boolean(value));
   };
 
+  const handleInputChange = (e) => {
+    onChange(e);
+    setHasContent(Boolean(e.target.value));
+  };
+
+  useEffect(() => {
+    if (value) {
+      setHasContent(true);
+    }
+  }, [value]);
+
   return (
-    <div className={`relative mb-4 ${isFocused ? "focused" : ""}`}>
+    <div className={`relative mb-4 ${isFocused || hasContent ? "focused" : ""}`}>
       <label
         className={`absolute top-[12px] left-3 transition-all duration-300 font-mont ${
-          isFocused || props.value
+          isFocused || hasContent
             ? `text-[${color}] text-xs top-[-10px] bg-white`
             : "text-[14px] text-gray-500"
         }`}
@@ -35,10 +47,12 @@ const AnimatedPlaceholderInput = ({
       <input
         {...props}
         value={value}
-        onChange={onChange}
+        onChange={handleInputChange}
         name={name}
         className={`w-full p-3 border-[${color}] text-[14px] border rounded-lg outline-none font-mont ${
-          isFocused ? `border-[${color}]` : "border-gray-300 bg-white"
+          isFocused || hasContent
+            ? `border-[${color}]`
+            : "border-gray-300 bg-white"
         } transition-all duration-300`}
         onFocus={handleFocus}
         onBlur={handleBlur}

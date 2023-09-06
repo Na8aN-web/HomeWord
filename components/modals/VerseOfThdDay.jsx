@@ -40,7 +40,7 @@ const VerseOfTheDayModal = ({ isModalOpen, verse, closeModal }) => {
   return (
     isModalOpen && (
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white p-4 w-1/2 rounded-md" ref={modalRef}>
+        <div className="bg-white p-4 w-3/4 md:w-1/2 rounded-md" ref={modalRef}>
           <h2 className="text-lg font-semibold mb-2 font-mont">
             Verse of the Day
           </h2>

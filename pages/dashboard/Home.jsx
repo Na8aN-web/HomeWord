@@ -13,6 +13,7 @@ const Home = () => {
   const [passageText, setPassageText] = useState("");
   const [availableChapters, setAvailableChapters] = useState([]);
   const [availableVerses, setAvailableVerses] = useState([]);
+  const [fetchAllLoading, setFetchAllLoading] = useState(false)
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -73,6 +74,28 @@ const Home = () => {
     }
   };
 
+  const fetchAllVerses = async () => {
+    setFetchAllLoading(true)
+    try {
+      const response = await axios.get(
+        `https://api.esv.org/v3/passage/text/?q=${selectedBook} 1-${availableChapters}&include-headings=false&include-footnotes=false&include-footnote-body=false&include-short-copyright=false`,
+        {
+          headers: {
+            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log(response)
+        setPassageText(response.data.passages);
+      }
+    } catch (error) {
+      console.error("Error fetching chapter headings:", error);
+    } finally {
+      setFetchAllLoading(false);
+    }
+  };
   const handleNextStep = () => {
     setStep(step + 1);
   };
@@ -140,7 +163,7 @@ const Home = () => {
             )}
             {step === 1 && (
               <motion.div
-                className="mb-4"
+                className="mb-4  p-8 md:p-2"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
@@ -174,7 +197,7 @@ const Home = () => {
             )}
             {step === 2 && availableChapters && (
               <motion.div
-                className="mb-4"
+                className="mb-4  p-8 md:p-2"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
@@ -228,7 +251,7 @@ const Home = () => {
 
             {step === 3 && availableVerses.length > 0 && (
               <motion.div
-                className="mb-4"
+                className="mb-4  p-8 md:p-2"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
@@ -271,11 +294,22 @@ const Home = () => {
                         scale: 1.05,
                         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                       }}
-                      onClick={() => handleVerseClick(verse)} // Call the function to fetch passage when a verse is clicked
+                      onClick={() => handleVerseClick(verse)}
                     >
                       {verse}
                     </motion.button>
                   ))}
+                  <motion.button
+                      className="px-4 py-2 font-mont focus:outline-none
+                      bg-gray-200 text-gray-800"
+                      whileHover={{
+                        scale: 1.05,
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                      }}
+                      onClick={fetchAllVerses}
+                    >
+                      {fetchAllLoading ? 'Loading...' : "Open All Verses"}
+                    </motion.button>
                 </div>
               </motion.div>
             )}
@@ -284,7 +318,6 @@ const Home = () => {
               <motion.div
                 className="border-[1px] p-4 shadow-md bg-gray-200"
                 whileHover={{
-                  scale: 1.01,
                   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                 }}
               >

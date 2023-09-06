@@ -2,7 +2,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
-  signOut
+  signOut,
+  updateProfile
 } from "firebase/auth";
 import { auth } from "../../firebase";
 import { setUser, setError, setSignUpLoading, setSuccess } from "./signupSlice";
@@ -10,7 +11,7 @@ import {
   setLogin,
   setLoginError,
   setLoginLoading,
-  clearUser
+  clearUser,
 } from "./loginSlice";
 import {
   setForgotError,
@@ -18,7 +19,7 @@ import {
   setForgotSuccess,
 } from "./ForgotPasswordSlice";
 
-export const signup = (email, password) => async (dispatch) => {
+export const signup = (email, password, firstName, lastname) => async (dispatch) => {
   dispatch(setSignUpLoading());
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -26,16 +27,22 @@ export const signup = (email, password) => async (dispatch) => {
       email,
       password
     );
+    await updateProfile(userCredential.user, {
+      displayName: `${firstName} ${lastname}`,
+    });
     const user = userCredential.user;
 
     dispatch(
       setUser({
         email: user.email,
         uid: user.uid,
+        firstName: firstName,
+        lastname: lastname,
       })
     );
 
     dispatch(setSuccess("Your account has been created successfully"));
+    console.log(user)
   } catch (err) {
     dispatch(setError(err.code));
   }
@@ -67,9 +74,7 @@ export const logout = () => async (dispatch) => {
   try {
     await signOut(auth);
     dispatch(clearUser()); // Dispatch the logout action
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 };
 
 export const forgotPassword = (email) => async (dispatch) => {

@@ -127,7 +127,7 @@ const Stories = () => {
       <AnimatePresence>
         <DashboardLayout>
           <div className="p-8 md:p-2">
-            <h2 className="font-mont text-[24px]">
+            <h2 className="font-mont text-[20px] md:text-[24px]">
               Pick a book of the bible and explore the various stories
             </h2>
             <div>
