@@ -21,7 +21,7 @@ const AnimatedPlaceholderInput = ({
   return (
     <div className={`relative mb-4 ${isFocused ? "focused" : ""}`}>
       <label
-        className={`absolute top-4 left-2 transition-all duration-300 font-mont ${
+        className={`absolute top-[12px] left-3 transition-all duration-300 font-mont ${
           isFocused || props.value
             ? `text-[${color}] text-xs top-[-10px] bg-white`
             : "text-[14px] text-gray-500"
@@ -37,7 +37,7 @@ const AnimatedPlaceholderInput = ({
         value={value}
         onChange={onChange}
         name={name}
-        className={`w-full p-3 border-[${color}] border rounded-lg outline-none font-mont ${
+        className={`w-full p-3 border-[${color}] text-[14px] border rounded-lg outline-none font-mont ${
           isFocused ? `border-[${color}]` : "border-gray-300 bg-white"
         } transition-all duration-300`}
         onFocus={handleFocus}

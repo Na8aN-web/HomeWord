@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  signOut
 } from "firebase/auth";
 import { auth } from "../../firebase";
 import { setUser, setError, setSignUpLoading, setSuccess } from "./signupSlice";
@@ -9,6 +10,7 @@ import {
   setLogin,
   setLoginError,
   setLoginLoading,
+  clearUser
 } from "./loginSlice";
 import {
   setForgotError,
@@ -58,6 +60,15 @@ export const login = (email, password) => async (dispatch) => {
     );
   } catch (err) {
     dispatch(setLoginError(err.code));
+  }
+};
+
+export const logout = () => async (dispatch) => {
+  try {
+    await signOut(auth);
+    dispatch(clearUser()); // Dispatch the logout action
+  } catch (error) {
+    
   }
 };
 

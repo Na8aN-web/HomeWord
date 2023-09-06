@@ -1,24 +1,21 @@
 import React, { useEffect } from "react";
 import { FaBible, FaSearch, FaBookOpen, FaGamepad } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
+import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { auth } from "../firebase";
+import { logout } from "@/store/authSlice/authActions";
 
 const Sidebar = ({ isSidebarOpen }) => {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const isActive = (pathname) => {
     return router.pathname === pathname ? " border-s-4 border-x-white" : "";
   };
 
 
    const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
+    dispatch(logout());
   };
 
   return (

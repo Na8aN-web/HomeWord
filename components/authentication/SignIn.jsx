@@ -98,7 +98,7 @@ const SignIn = ({ formData, setFormData, handleToggleForm }) => {
         </h5>
         <Link
           href="/authentication/ForgotPassword"
-          className="text-white md:text-[#6568c9] text-[16px] underline hover:cursor-pointer font-mont"
+          className="text-white md:text-[#6568c9] text-[15px] mt-8 underline hover:cursor-pointer font-mont"
         >
           Forgot Password?
         </Link>

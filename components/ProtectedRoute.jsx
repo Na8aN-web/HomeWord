@@ -1,39 +1,28 @@
+// ProtectedRoute.js
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { auth } from '../firebase';
 
-const ProtectedRoute = ({ children }) => {
+function ProtectedRoute({ children }) {
+  const isAuth = useSelector((state) => state.login.isAuthenticated);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setLoading(false); // Mark the loading process as complete
+    if (!isAuth) {
+      router.push('/authentication/AuthLayout')
+        .finally(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
+  }, [isAuth, router]);
 
-      if (user) {
-        setAuthenticated(true); // User is authenticated
-      }else if (!user && !authenticated) {
-        // Only redirect if the user is not authenticated and we haven't already redirected
-        router.push('/authentication/AuthLayout');
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  if (loading) {
-    // Render a loading indicator while checking authentication state
-    return <div className='flex justify-center font-mont text-[32px] p-8'>Loading...</div>;
+  if (isLoading) {
+  
+    return <p className='font-mont w-full flex justify-center text-[20px] p-8'>Loading...</p>;
   }
 
-  if (authenticated) {
-    // Render the protected content if the user is authenticated
-    return children;
-  }
-
-  // Render nothing if the user is not authenticated (or is still loading)
-  return null;
-};
+  return children;
+}
 
 export default ProtectedRoute;
