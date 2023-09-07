@@ -4,7 +4,8 @@ import AnimatedPlaceholderInput from "../AnimatedPlaceholder";
 import { signup } from "@/store/authSlice/authActions";
 import { setError } from "@/store/authSlice/signupSlice";
 import Image from "next/image";
-import BGone from '../../public/signup.jpg'
+import BGone from "../../public/signup.jpg";
+import Link from "next/link";
 
 const SignUp = ({ formData, setFormData, handleToggleForm }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,14 @@ const SignUp = ({ formData, setFormData, handleToggleForm }) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (formData.password === formData.repeatPassword) {
-      dispatch(signup(formData.email, formData.password, formData.firstName, formData.lastname));
+      dispatch(
+        signup(
+          formData.email,
+          formData.password,
+          formData.firstName,
+          formData.lastname
+        )
+      );
     } else {
       dispatch(setError("Passwords don't match"));
     }
@@ -28,7 +36,6 @@ const SignUp = ({ formData, setFormData, handleToggleForm }) => {
       [name]: value,
     }));
   };
-
 
   return (
     <div className=" h-screen w-full overflow-y-scroll custom-scrollbar relative ">
@@ -44,7 +51,7 @@ const SignUp = ({ formData, setFormData, handleToggleForm }) => {
         className=" flex flex-col items-center justify-center h-screen overlay"
       >
         <h1 className="sm:text-4xl text-xl font-semibold font-mont text-center">
-          <span className="bg-white md:bg-gradient-to-r from-[#5934ae] to-[#5dc5cb] text-transparent bg-clip-text">
+          <span className="bg-white md:bg-[#5dc5cb] text-transparent bg-clip-text">
             CREATE AN ACCOUNT
           </span>
         </h1>
@@ -138,6 +145,12 @@ const SignUp = ({ formData, setFormData, handleToggleForm }) => {
             </h4>
           </div>
         </h5>
+        <Link
+          href="/"
+          className="text-white md:text-[#5dc5cb] text-[15px] mt-8 underline hover:cursor-pointer font-mont"
+        >
+          Home
+        </Link>
       </form>
     </div>
   );

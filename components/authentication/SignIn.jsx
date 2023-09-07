@@ -44,7 +44,7 @@ const SignIn = ({ formData, setFormData, handleToggleForm }) => {
       />
       <form className="flex flex-col items-center justify-center h-screen overlay">
         <h1 className="sm:text-4xl text-xl font-semibold font-mont my-8 text-center">
-          <span className="bg-white md:bg-gradient-to-r from-[#5dc5cb] to-[#6568c9]  text-transparent bg-clip-text">
+          <span className="bg-white md:bg-[#6568c9]  text-transparent bg-clip-text">
             WELCOME BACK
           </span>
         </h1>
