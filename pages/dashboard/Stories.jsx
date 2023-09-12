@@ -20,7 +20,7 @@ const Stories = () => {
         `https://api.esv.org/v3/passage/text/?q=${book}`,
         {
           headers: {
-            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd", // Replace with your actual API key
+            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
           },
         }
       );
@@ -62,7 +62,7 @@ const Stories = () => {
         `https://api.esv.org/v3/passage/text/?q=${book} 1-${totalChapters}&include-heading-horizontal-lines=true`,
         {
           headers: {
-            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd", // Replace with your actual API key
+            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
           },
         }
       );
@@ -93,7 +93,7 @@ const Stories = () => {
         `https://api.esv.org/v3/passage/text/?q=${book} ${chapter}&include-passage-references=false&include-headings=false&include-verse-numbers=false`,
         {
           headers: {
-            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd", // Replace with your actual API key
+            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
           },
         }
       );

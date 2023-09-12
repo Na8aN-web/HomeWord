@@ -13,7 +13,7 @@ const Home = () => {
   const [passageText, setPassageText] = useState("");
   const [availableChapters, setAvailableChapters] = useState([]);
   const [availableVerses, setAvailableVerses] = useState([]);
-  const [fetchAllLoading, setFetchAllLoading] = useState(false)
+  const [fetchAllLoading, setFetchAllLoading] = useState(false);
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +35,7 @@ const Home = () => {
         `https://api.esv.org/v3/passage/text/?q=${selectedBook}`,
         {
           headers: {
-            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd",
+            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
           },
         }
       );
@@ -58,7 +58,7 @@ const Home = () => {
         `https://api.esv.org/v3/passage/text/?q=${passageQuery}`,
         {
           headers: {
-            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd",
+            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
           },
         }
       );
@@ -75,19 +75,19 @@ const Home = () => {
   };
 
   const fetchAllVerses = async () => {
-    setFetchAllLoading(true)
+    setFetchAllLoading(true);
     try {
       const response = await axios.get(
         `https://api.esv.org/v3/passage/text/?q=${selectedBook} 1-${availableChapters}&include-headings=false&include-footnotes=false&include-footnote-body=false&include-short-copyright=false`,
         {
           headers: {
-            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd",
+            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
           },
         }
       );
 
       if (response.status === 200) {
-        console.log(response)
+        console.log(response);
         setPassageText(response.data.passages);
       }
     } catch (error) {
@@ -110,7 +110,7 @@ const Home = () => {
         `https://api.esv.org/v3/passage/text/?q=${passageQuery}`,
         {
           headers: {
-            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd",
+            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
           },
         }
       );
@@ -169,30 +169,32 @@ const Home = () => {
                 exit={{ opacity: 0, x: 20 }}
                 key="step1"
               >
-                <label className="block text-md font-light text-gray-800 mb-4 font-mont ">
-                  Select a Book
-                </label>
-                <Select
-                  options={bibleBooks.map((book, index) => ({
-                    value: book,
-                    label: book,
-                  }))}
-                  value={{ value: selectedBook, label: selectedBook }}
-                  onChange={(selectedOption) =>
-                    setSelectedBook(selectedOption.value)
-                  }
-                  styles={customStyles}
-                />
-                <motion.button
-                  className="mt-4 px-4 py-2 bg-gray-800 text-white hover:bg-white hover:text-gray-800 font-mont focus:outline-none"
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  }}
-                  onClick={handleNextStep}
-                >
-                  Next
-                </motion.button>
+                <form onSubmit={handleNextStep}>
+                  <label className="block text-md font-light text-gray-800 mb-4 font-mont ">
+                    Select a Book
+                  </label>
+                  <Select
+                    options={bibleBooks.map((book, index) => ({
+                      value: book,
+                      label: book,
+                    }))}
+                    value={{ value: selectedBook, label: selectedBook }}
+                    onChange={(selectedOption) =>
+                      setSelectedBook(selectedOption.value)
+                    }
+                    styles={customStyles}
+                    required
+                  />
+                  <motion.button
+                    className="mt-4 px-4 py-2 bg-gray-800 text-white hover:bg-white hover:text-gray-800 font-mont focus:outline-none"
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    Next
+                  </motion.button>
+                </form>
               </motion.div>
             )}
             {step === 2 && availableChapters && (
@@ -237,7 +239,9 @@ const Home = () => {
                   ))}
                 </div>
                 <motion.button
-                  className="mt-4 px-4 py-2 bg-gray-800 text-white hover:bg-white hover:text-gray-800 font-mont focus:outline-none"
+                  className={`mt-4 px-4 py-2 font-mont focus:outline-none ${
+                    selectedChapter ? "bg-gray-800 text-white" : "invisible"
+                  }`}
                   whileHover={{
                     scale: 1.05,
                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
@@ -300,16 +304,16 @@ const Home = () => {
                     </motion.button>
                   ))}
                   <motion.button
-                      className="px-4 py-2 font-mont focus:outline-none
+                    className="px-4 py-2 font-mont focus:outline-none
                       bg-gray-200 text-gray-800"
-                      whileHover={{
-                        scale: 1.05,
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      }}
-                      onClick={fetchAllVerses}
-                    >
-                      {fetchAllLoading ? 'Loading...' : "Open All Verses"}
-                    </motion.button>
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    }}
+                    onClick={fetchAllVerses}
+                  >
+                    {fetchAllLoading ? "Loading..." : "Open All Verses"}
+                  </motion.button>
                 </div>
               </motion.div>
             )}

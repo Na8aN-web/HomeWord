@@ -5,7 +5,7 @@ import AnimatedPlaceholderInput from "../AnimatedPlaceholder";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import BGone from '../../public/signin.jpg'
+import BGone from "../../public/signin.jpg";
 
 const SignIn = ({ formData, setFormData, handleToggleForm }) => {
   const router = useRouter();
@@ -42,7 +42,10 @@ const SignIn = ({ formData, setFormData, handleToggleForm }) => {
         objectFit="cover"
         className="block md:hidden"
       />
-      <form className="flex flex-col items-center justify-center h-screen overlay">
+      <form
+        onSubmit={handleSignIn}
+        className="flex flex-col items-center justify-center h-screen overlay"
+      >
         <h1 className="sm:text-4xl text-xl font-semibold font-mont my-8 text-center">
           <span className="bg-white md:bg-[#6568c9]  text-transparent bg-clip-text">
             WELCOME BACK
@@ -80,7 +83,6 @@ const SignIn = ({ formData, setFormData, handleToggleForm }) => {
             type="submit"
             className="bg-[#6568c9] hover:bg-white hover:text-[#6568c9] border-2 text-[15px] hover:border-[#6568c9] text-white px-24 py-3 rounded-lg mt-6 font-mont"
             disabled={authLoading}
-            onClick={handleSignIn}
           >
             {authLoading ? "Loading..." : "Sign In"}
           </button>

@@ -45,7 +45,7 @@ const SearchComponent = () => {
         `https://api.esv.org/v3/passage/search/?q=${searchTerm}&page=${page}`,
         {
           headers: {
-            Authorization: "Token 0bb8d869cefbcf972bea88fabc5182de2f58d6bd",
+            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
           },
         }
       );
