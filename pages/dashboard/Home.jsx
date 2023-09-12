@@ -163,38 +163,39 @@ const Home = () => {
             )}
             {step === 1 && (
               <motion.div
-                className="mb-4  p-8 md:p-2"
+                className="mb-4 p-8 md:p-2"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
                 key="step1"
               >
-                <form onSubmit={handleNextStep}>
-                  <label className="block text-md font-light text-gray-800 mb-4 font-mont ">
-                    Select a Book
-                  </label>
-                  <Select
-                    options={bibleBooks.map((book, index) => ({
-                      value: book,
-                      label: book,
-                    }))}
-                    value={{ value: selectedBook, label: selectedBook }}
-                    onChange={(selectedOption) =>
-                      setSelectedBook(selectedOption.value)
-                    }
-                    styles={customStyles}
-                    required
-                  />
+                <label className="block text-md font-light text-gray-800 mb-4 font-mont">
+                  Select a Book
+                </label>
+                <Select
+                  options={bibleBooks.map((book, index) => ({
+                    value: book,
+                    label: book,
+                  }))}
+                  value={{ value: selectedBook, label: selectedBook }}
+                  onChange={(selectedOption) =>
+                    setSelectedBook(selectedOption.value)
+                  }
+                  styles={customStyles}
+                  required
+                />
+                {selectedBook ? (
                   <motion.button
                     className="mt-4 px-4 py-2 bg-gray-800 text-white hover:bg-white hover:text-gray-800 font-mont focus:outline-none"
                     whileHover={{
                       scale: 1.05,
                       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                     }}
+                    onClick={handleNextStep}
                   >
                     Next
                   </motion.button>
-                </form>
+                ) : null}
               </motion.div>
             )}
             {step === 2 && availableChapters && (
@@ -219,25 +220,30 @@ const Home = () => {
                     |<h4>Select a Chapter:</h4>
                   </div>
                 </label>
-                <div className="flex flex-wrap gap-2">
-                  {availableChapters.map((chapter, index) => (
-                    <motion.button
-                      key={index}
-                      className={`px-4 py-2 font-mont focus:outline-none ${
-                        selectedChapter === chapter
-                          ? "bg-gray-800 text-white"
-                          : "bg-gray-200 text-gray-800"
-                      }`}
-                      whileHover={{
-                        scale: 1.05,
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      }}
-                      onClick={() => setSelectedChapter(chapter)}
-                    >
-                      {chapter}
-                    </motion.button>
-                  ))}
-                </div>
+                {availableChapters.length === 0 ? (
+                   <div className="font-mont">Loading...</div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {availableChapters.map((chapter, index) => (
+                      <motion.button
+                        key={index}
+                        className={`px-4 py-2 font-mont focus:outline-none ${
+                          selectedChapter === chapter
+                            ? "bg-gray-800 text-white"
+                            : "bg-gray-200 text-gray-800"
+                        }`}
+                        whileHover={{
+                          scale: 1.05,
+                          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                        }}
+                        onClick={() => setSelectedChapter(chapter)}
+                      >
+                        {chapter}
+                      </motion.button>
+                    ))}
+                  </div>
+                )}
+
                 <motion.button
                   className={`mt-4 px-4 py-2 font-mont focus:outline-none ${
                     selectedChapter ? "bg-gray-800 text-white" : "invisible"
@@ -285,36 +291,40 @@ const Home = () => {
                     |<h4>Select a verse: </h4>
                   </div>
                 </label>
-                <div className="flex flex-wrap gap-2">
-                  {availableVerses.map((verse, index) => (
+                {availableVerses.length === 0 ? (
+                  <div className="font-mont">Loading...</div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {availableVerses.map((verse, index) => (
+                      <motion.button
+                        key={index}
+                        className={`px-4 py-2 font-mont focus:outline-none ${
+                          selectedVerse === verse
+                            ? "bg-gray-800 text-white"
+                            : "bg-gray-200 text-gray-800"
+                        }`}
+                        whileHover={{
+                          scale: 1.05,
+                          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                        }}
+                        onClick={() => handleVerseClick(verse)}
+                      >
+                        {verse}
+                      </motion.button>
+                    ))}
                     <motion.button
-                      key={index}
-                      className={`px-4 py-2 font-mont focus:outline-none ${
-                        selectedVerse === verse
-                          ? "bg-gray-800 text-white"
-                          : "bg-gray-200 text-gray-800"
-                      }`}
+                      className="px-4 py-2 font-mont focus:outline-none
+                      bg-gray-200 text-gray-800"
                       whileHover={{
                         scale: 1.05,
                         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                       }}
-                      onClick={() => handleVerseClick(verse)}
+                      onClick={fetchAllVerses}
                     >
-                      {verse}
+                      {fetchAllLoading ? "Loading..." : "Open All Verses"}
                     </motion.button>
-                  ))}
-                  <motion.button
-                    className="px-4 py-2 font-mont focus:outline-none
-                      bg-gray-200 text-gray-800"
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    }}
-                    onClick={fetchAllVerses}
-                  >
-                    {fetchAllLoading ? "Loading..." : "Open All Verses"}
-                  </motion.button>
-                </div>
+                  </div>
+                )}
               </motion.div>
             )}
 
