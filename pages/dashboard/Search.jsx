@@ -11,6 +11,7 @@ const SearchComponent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [searchFailed, setSearchFailed] = useState(false);
 
   const handleSearch = async () => {
     setLoading(true);
@@ -52,6 +53,7 @@ const SearchComponent = () => {
       const data = response.data.results;
       setSearchResults(data);
       setTotalPages(response.data.total_pages);
+      setSearchFailed(data.length === 0);
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
@@ -94,7 +96,7 @@ const SearchComponent = () => {
                 scale: 1.05,
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
               }}
-              disabled={loading}
+              disabled={loading || searchTerm.trim() === ""}
               onClick={handleSearch}
             >
               {loading ? "Loading..." : "Fetch Passage"}
@@ -116,6 +118,13 @@ const SearchComponent = () => {
                 />
               </div>
             )}
+            <div className="mt-4">
+              {searchFailed && searchResults.length === 0 && (
+                <p className="text-red-600 font-mont my-8">
+                  Sorry, I couldn&apos;t find that. Try searching for something else.
+                </p>
+              )}
+            </div>
             <div className="mt-4">
               {searchResults.map((passage, index) => (
                 <div key={`${index}-${passage.id}`} className="font-mont my-8">

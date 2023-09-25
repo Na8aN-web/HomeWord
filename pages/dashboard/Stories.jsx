@@ -11,6 +11,7 @@ const Stories = () => {
   const [chapterHeadings, setChapterHeadings] = useState([]);
   const [totalChapters, setTotalChapters] = useState(0);
   const [selectedChapter, setSelectedChapter] = useState(null);
+  const [selectedStoryHeading, setSelectedStoryHeading] = useState(null);
   const [chapterContents, setChapterContents] = useState({});
   const [step, setStep] = useState(0);
 
@@ -43,8 +44,19 @@ const Stories = () => {
   };
 
   const handleChapterChange = (selectedOption) => {
-    setSelectedChapter(selectedOption);
+    setSelectedChapter(
+      selectedOption ? chapterHeadings.indexOf(selectedOption.value) + 1 : null
+    );
+    setSelectedStoryHeading(selectedOption ? selectedOption.value : null); // Set selected story heading
+    if (selectedOption && selectedBook) {
+      fetchChapterContents(
+        selectedBook.value,
+        chapterHeadings.indexOf(selectedOption.value) + 1
+      );
+    }
   };
+
+  console.log(selectedChapter);
 
   const handleNextStep = () => {
     setStep(step + 1);
@@ -66,7 +78,7 @@ const Stories = () => {
           },
         }
       );
-
+      console.log(response);
       if (response.status === 200) {
         const passages = response.data.passages[0];
         const sections = passages.split("\n\n");
@@ -80,12 +92,6 @@ const Stories = () => {
       console.error("Error fetching chapter headings:", error);
     }
   };
-
-  useEffect(() => {
-    if (selectedChapter) {
-      fetchChapterContents(selectedBook.value, selectedChapter.value);
-    }
-  }, [selectedChapter, selectedBook]);
 
   const fetchChapterContents = async (book, chapter) => {
     try {
@@ -110,6 +116,12 @@ const Stories = () => {
     }
   };
 
+  useEffect(() => {
+    if (selectedChapter) {
+      fetchChapterContents(selectedBook.value, selectedChapter);
+    }
+  }, [selectedChapter, selectedBook]);
+
   const customStyles = {
     option: (provided, { isFocused }) => ({
       ...provided,
@@ -122,6 +134,7 @@ const Stories = () => {
       fontFamily: "Montserrat, sans-serif",
     }),
   };
+
   return (
     <ProtectedRoute>
       <AnimatePresence>
@@ -173,7 +186,7 @@ const Stories = () => {
                         onClick={() => setStep(0)}
                       >
                         Select a Book
-                        <span className="bg-gray-800 text-white px-2">
+                        <span className="bg-gray-800 text-white px-2 mx-2">
                           {selectedBook.value}
                         </span>
                       </h4>
@@ -185,7 +198,10 @@ const Stories = () => {
                       value: heading,
                       label: heading,
                     }))}
-                    value={selectedChapter}
+                    value={{
+                      value: selectedChapter,
+                      label: selectedStoryHeading,
+                    }}
                     onChange={handleChapterChange}
                     isClearable={true}
                     styles={customStyles}
@@ -194,7 +210,7 @@ const Stories = () => {
                 {selectedChapter && (
                   <div>
                     <p className="whitespace-pre-line font-mont leading-loose pt-8">
-                      {chapterContents[selectedChapter.value] ||
+                      {chapterContents[selectedChapter] ||
                         "Loading chapter contents..."}
                     </p>
                   </div>
