@@ -18,38 +18,10 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (selectedBook) {
-      fetchAvailableChapters();
-    }
-  }, [selectedBook]);
-
-  useEffect(() => {
     if (selectedChapter) {
       fetchAvailableVerses();
     }
   }, [selectedChapter]);
-
-  const fetchAvailableChapters = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.esv.org/v3/passage/text/?q=${selectedBook}`,
-        {
-          headers: {
-            Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
-          },
-        }
-      );
-
-      const passages = response.data.passages.join("\n");
-      const chapterCount = (passages.match(/\[\d+\]/g) || []).length;
-
-      setAvailableChapters(
-        Array.from({ length: chapterCount }, (_, index) => index + 1)
-      );
-    } catch (error) {
-      console.error("Error fetching available chapters:", error);
-    }
-  };
 
   const fetchAvailableVerses = async () => {
     try {
@@ -78,7 +50,7 @@ const Home = () => {
     setFetchAllLoading(true);
     try {
       const response = await axios.get(
-        `https://api.esv.org/v3/passage/text/?q=${selectedBook} 1-${availableChapters}&include-headings=false&include-footnotes=false&include-footnote-body=false&include-short-copyright=false`,
+        `https://api.esv.org/v3/passage/text/?q=${selectedBook}+${selectedChapter}:1-${availableVerses}&include-passage-references=false&include-headings=false&include-footnotes=false&include-footnote-body=false&include-short-copyright=false`,
         {
           headers: {
             Authorization: `Token ${process.env.NEXT_PUBLIC_ESV_API_TOKEN}`,
@@ -135,7 +107,6 @@ const Home = () => {
       fontFamily: "Montserrat, sans-serif",
     }),
   };
-
   return (
     <ProtectedRoute>
       <DashboardLayout>
@@ -173,17 +144,24 @@ const Home = () => {
                   Select a Book
                 </label>
                 <Select
-                  options={bibleBooks.map((book, index) => ({
-                    value: book,
-                    label: book,
+                  options={bibleBooks.map((bookObj, index) => ({
+                    value: bookObj.book,
+                    label: bookObj.book,
+                    chapterCount: bookObj.chapterCount,
                   }))}
-                  value={{ value: selectedBook, label: selectedBook }}
-                  onChange={(selectedOption) =>
-                    setSelectedBook(selectedOption.value)
-                  }
+                  value={{
+                    value: selectedBook,
+                    label: selectedBook,
+                    chapterCount: availableChapters,
+                  }}
+                  onChange={(selectedOption) => {
+                    setAvailableChapters(selectedOption.chapterCount);
+                    setSelectedBook(selectedOption.value);
+                  }}
                   styles={customStyles}
                   required
                 />
+
                 {selectedBook ? (
                   <motion.button
                     className="mt-4 px-4 py-2 bg-gray-800 text-white hover:bg-white hover:text-gray-800 font-mont focus:outline-none"
@@ -210,7 +188,10 @@ const Home = () => {
                   <div className="flex gap-4">
                     <h4
                       className="border-b-[1px] border-b-gray-800 hover:cursor-pointer"
-                      onClick={() => setStep(1)}
+                      onClick={() => {
+                        setStep(1);
+                        setPassageText("");
+                      }}
                     >
                       Select a Book{" "}
                       <span className="bg-gray-800 text-white px-2">
@@ -221,14 +202,14 @@ const Home = () => {
                   </div>
                 </label>
                 {availableChapters.length === 0 ? (
-                   <div className="font-mont">Loading...</div>
+                  <div className="font-mont">Loading...</div>
                 ) : (
                   <div className="flex flex-wrap gap-2">
-                    {availableChapters.map((chapter, index) => (
+                    {Array.from({ length: availableChapters }, (_, index) => (
                       <motion.button
                         key={index}
                         className={`px-4 py-2 font-mont focus:outline-none ${
-                          selectedChapter === chapter
+                          selectedChapter === index + 1
                             ? "bg-gray-800 text-white"
                             : "bg-gray-200 text-gray-800"
                         }`}
@@ -236,9 +217,9 @@ const Home = () => {
                           scale: 1.05,
                           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                         }}
-                        onClick={() => setSelectedChapter(chapter)}
+                        onClick={() => setSelectedChapter(index + 1)}
                       >
-                        {chapter}
+                         {index + 1}
                       </motion.button>
                     ))}
                   </div>
@@ -281,7 +262,10 @@ const Home = () => {
                     |
                     <h4
                       className="border-b-[1px] border-b-gray-800 hover:cursor-pointer"
-                      onClick={() => setStep(2)}
+                      onClick={() => {
+                        setStep(2);
+                        setPassageText("");
+                      }}
                     >
                       Select a Chapter{" "}
                       <span className="bg-gray-800 text-white px-2">
