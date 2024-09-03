@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }) => {
       <Sidebar isSidebarOpen={isSidebarOpen} />
       <div
         className={`flex-1 ${
-          isSidebarOpen ? "w-full" : "w-0" // Use "w-0" to hide the sidebar when it's closed
+          isSidebarOpen ? "w-full" : "w-0"
         } transition-all duration-300 flex flex-col`}
       >
         <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}/>

@@ -32,7 +32,6 @@ const Stories = () => {
     setSelectedStory(selectedOption.value);
     const headingIndex = chapterHeadings.indexOf(selectedOption.value);
     if (headingIndex !== -1) {
-      // Remove the chapter heading from the content
       const contentWithoutHeading = chapterContent[headingIndex].replace(selectedOption.value, '');
       setSelectedChapterContent(contentWithoutHeading);
     }
@@ -58,12 +57,10 @@ const Stories = () => {
 
         for (const section of sections) {
           if (section.trim().startsWith("_")) {
-            // Store the current heading and start a new one
             currentHeading = section.trim().replace(/^_+/, "");
             chapterHeadings.push(currentHeading);
-            chapterContents.push(currentHeading); // Include the heading in the content array
+            chapterContents.push(currentHeading); 
           } else {
-            // Append content to the current chapter
             chapterContents[chapterContents.length - 1] += "\n\n" + section;
           }
         }
@@ -74,7 +71,7 @@ const Stories = () => {
     } catch (error) {
       console.error("Error fetching chapter headings:", error);
     } finally {
-      setIsLoading(false); // Set loading state to false when done
+      setIsLoading(false); 
     }
   };
 
@@ -82,7 +79,7 @@ const Stories = () => {
     option: (provided, { isFocused }) => ({
       ...provided,
       fontFamily: "Montserrat, sans-serif",
-      backgroundColor: isFocused ? "#2D3748" : "white", // Change bg color on hover
+      backgroundColor: isFocused ? "#2D3748" : "white",
       color: isFocused ? "white" : "#2D3748",
     }),
     control: (provided) => ({
@@ -179,7 +176,7 @@ const Stories = () => {
                     onChange={handleStoryChange}
                     isClearable={true}
                     styles={customStyles}
-                    isDisabled={isLoading} // Disable the Select input when loading
+                    isDisabled={isLoading} 
                     isLoading={isLoading}
                   />
                 </div>

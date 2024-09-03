@@ -10,8 +10,8 @@ import Image from "next/image";
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
-  const forgotError = useSelector((state) => state.forgotPassword.error); // Get the error state from the auth slice
-  const forgotSuccess = useSelector((state) => state.forgotPassword.success); // Get the success state from the auth slice
+  const forgotError = useSelector((state) => state.forgotPassword.error); 
+  const forgotSuccess = useSelector((state) => state.forgotPassword.success); 
   const forgotLoading = useSelector((state) => state.forgotPassword.isLoading);
 
   const handleForgotPassword = async (e) => {

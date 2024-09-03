@@ -1,4 +1,4 @@
-// bibleBooks.js
+
 const bibleBooks = [
   { book: "Genesis", chapterCount: 50 },
   { book: "Exodus", chapterCount: 40 },

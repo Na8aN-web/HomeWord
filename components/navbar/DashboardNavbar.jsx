@@ -12,11 +12,9 @@ const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Fetch the Verse of the Day from the Bible.org API
     fetch("https://labs.bible.org/api/?passage=votd")
       .then((response) => response.text())
       .then((data) => {
-        // Parse the response data to extract and format the first verse
         const firstVerse = parseFirstVerse(data);
         setVerse(firstVerse);
       })
@@ -26,7 +24,6 @@ const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   }, []);
 
   const parseFirstVerse = (verseData) => {
-    // Split the data by "<b>" tags to separate verses
     const verses = verseData
       .split("<b>")
       .filter((verse) => verse.trim() !== "");
@@ -40,14 +37,14 @@ const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
       }
     }
 
-    return "Verse not found"; // Return a message if no verse is found
+    return "Verse not found"; 
   };
 
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // Function to close the modal
+
   const closeModal = () => {
     setIsModalOpen(false);
   };

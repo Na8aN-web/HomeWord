@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import axios from "axios";
-import bibleBooks from "../../store/bibleBooks"; // Import the list of Bible books
+import bibleBooks from "../../store/bibleBooks";
 import { motion, AnimatePresence } from "framer-motion";
 import Select from "react-select";
 import ProtectedRoute from "@/components/ProtectedRoute";

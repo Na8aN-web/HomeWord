@@ -15,24 +15,17 @@ const AuthLayout = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Function to detect screen size and set isMobile state
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    // Initial screen size detection
     handleResize();
-
-    // Add an event listener for window resize
     window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener on unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // State to track form data and errors
   const [signUpFormData, setSignUpFormData] = useState({
     firstName: "",
     lastname: "",
@@ -46,10 +39,8 @@ const AuthLayout = () => {
   });
   const [signInError, setSignInError] = useState("");
 
-  // Toggle between sign-in and sign-up forms
   const handleToggleForm = () => {
     setIsOpen(!isOpen);
-    // Clear form data and error based on current form
     if (isOpen) {
       setSignInFormData({
         email: "",

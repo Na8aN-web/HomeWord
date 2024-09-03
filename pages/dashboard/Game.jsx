@@ -50,17 +50,14 @@ const Game = () => {
   };
 
   useEffect(() => {
-    // Initialize Typed.js instance when scripture is set
     if (verse && scriptureRef.current) {
       const options = {
-        strings: [verse], // An array containing the verse to type
-        typeSpeed: 40, // Typing speed in milliseconds
-        showCursor: false, // Hide the cursor
+        strings: [verse],
+        typeSpeed: 40,
+        showCursor: false,
       };
       const newTyped = new Typed(scriptureRef.current, options);
       setTyped(newTyped);
-
-      // Cleanup Typed.js instance on unmount
       return () => {
         newTyped.destroy();
       };
@@ -129,13 +126,10 @@ const Game = () => {
       const snapshot = await get(highscoresQuery);
       if (snapshot.exists()) {
         const highscoresData = snapshot.val();
-        // Convert the object of highscores into an array
         const highscoresArray = Object.values(highscoresData);
 
-        // Sort the highscores in descending order (highest first)
         highscoresArray.sort((a, b) => b.score - a.score);
 
-        // Format and add the date to each highscore entry
         highscoresArray.forEach((entry) => {
           const timestamp = entry.timestamp;
           if (timestamp) {
@@ -152,44 +146,36 @@ const Game = () => {
     } catch (error) {
       console.error("Error fetching highscores:", error);
     } finally {
-      setScoresLoading(false); // Set scoresLoading to false when done fetching
+      setScoresLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchHighscores(); // Fetch highscores when the component mounts
+    fetchHighscores();
   }, []);
 
   const saveHighscore = async (score) => {
     try {
-      // Get a reference to the "highscores" node in the database
       if (gameEnded) {
         return;
       }
       const db = getDatabase(app);
       const highscoresRef = ref(db, "highscores");
 
-      // Generate a new unique key for the highscore entry
       const newHighscoreRef = push(highscoresRef);
-
-      // Get the current timestamp using serverTimestamp()
       const timestamp = serverTimestamp();
 
       const fullName = auth.currentUser.displayName;
       const firstName = fullName.split(" ")[0];
-      // Create a highscore object
       const highscoreData = {
         score: score,
         timestamp: timestamp,
         name: firstName,
       };
 
-      // Save the highscore entry to the database
       await push(highscoresRef, highscoreData);
 
       setGameEnded(true);
-
-      // After saving the highscore, fetch the updated highscores and update the state
       fetchHighscores();
     } catch (error) {
       console.error("Error saving highscore:", error);
@@ -207,10 +193,10 @@ const Game = () => {
       <DashboardLayout>
         <AnimatePresence>
           <motion.div
-            initial={{ opacity: 0, x: -100 }} // Initial position and opacity
-            animate={{ opacity: 1, x: 0 }} // Animate to full opacity and default position
-            exit={{ opacity: 0, x: -100 }} // Animate to exit with sliding to the left
-            transition={{ duration: 0.3 }} // Animation duration
+            initial={{ opacity: 0, x: -100 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            exit={{ opacity: 0, x: -100 }} 
+            transition={{ duration: 0.3 }} 
             className="p-8 md:p-2"
           >
             {!gameStarted && (
@@ -254,10 +240,10 @@ const Game = () => {
                         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                       }}
                       animate={{
-                        scale: [1, 1.05, 1], // Define the animation keyframes
+                        scale: [1, 1.05, 1], 
                         transition: {
-                          duration: 3, // Animation duration for one loop
-                          repeat: Infinity, // Infinite animation loop
+                          duration: 3,
+                          repeat: Infinity,
                         },
                       }}
                       onClick={startGame}
@@ -267,7 +253,6 @@ const Game = () => {
                   </div>
                 </div>
                 <div className="row my-8">
-                  {/* ... previous code ... */}
                   <div className="row bg-gray-800 text-white mb-12 py-4 w-full">
                     <div className="col-md-8 offset-md-2 font-mont">
                       <h2 className="font-mont text-[20px] text-center mb-4">
@@ -417,7 +402,7 @@ const Game = () => {
                             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                           }}
                           onClick={() => {
-                            window.location.reload(); // Refresh the page
+                            window.location.reload();
                           }}
                         >
                           Main Menu

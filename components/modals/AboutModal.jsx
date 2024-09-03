@@ -7,7 +7,7 @@ const AboutModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose(); // Call the onClose function to close the modal
+        onClose();
       }
     };
 

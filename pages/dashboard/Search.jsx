@@ -24,14 +24,14 @@ const SearchComponent = () => {
       } finally {
         setLoading(false);
       }
-    }, 500); // Delay the API call by 100ms
+    }, 500); 
   };
 
   const customStyles = {
     option: (provided, { isFocused }) => ({
       ...provided,
       fontFamily: "Montserrat, sans-serif",
-      backgroundColor: isFocused ? "#2D3748" : "white", // Change bg color on hover
+      backgroundColor: isFocused ? "#2D3748" : "white",
       color: isFocused ? "white" : "#2D3748",
     }),
     control: (provided) => ({
@@ -62,7 +62,7 @@ const SearchComponent = () => {
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
-      fetchSearchResults(newPage); // Fetch results for the new page
+      fetchSearchResults(newPage); 
     }
   };
 
@@ -71,10 +71,10 @@ const SearchComponent = () => {
       <DashboardLayout>
         <AnimatePresence>
           <motion.div
-            initial={{ opacity: 0, x: -100 }} // Initial position and opacity
-            animate={{ opacity: 1, x: 0 }} // Animate to full opacity and default position
-            exit={{ opacity: 0, x: -100 }} // Animate to exit with sliding to the left
-            transition={{ duration: 0.3 }} // Animation duration
+            initial={{ opacity: 0, x: -100 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            exit={{ opacity: 0, x: -100 }} 
+            transition={{ duration: 0.3 }}
             className=" p-8 md:p-2"
           >
             <h1 className="font-mont text-[20px] md:text-[24px] my-8">
@@ -114,7 +114,6 @@ const SearchComponent = () => {
                     handlePageChange(selectedOption.value)
                   }
                   styles={customStyles}
-                  // Add more styling and customization props as needed
                 />
               </div>
             )}

@@ -3,8 +3,11 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  deleteUser,
+  getAuth,
   updateProfile
 } from "firebase/auth";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { auth } from "../../firebase";
 import { setUser, setError, setSignUpLoading, setSuccess } from "./signupSlice";
 import {
@@ -36,8 +39,7 @@ export const signup = (email, password, firstName, lastname) => async (dispatch)
       setUser({
         email: user.email,
         uid: user.uid,
-        firstName: firstName,
-        lastname: lastname,
+        displayName: user.displayName
       })
     );
 
@@ -48,7 +50,6 @@ export const signup = (email, password, firstName, lastname) => async (dispatch)
   }
 };
 
-// Auth actions
 export const login = (email, password) => async (dispatch) => {
   dispatch(setLoginLoading());
   try {
@@ -63,6 +64,7 @@ export const login = (email, password) => async (dispatch) => {
       setLogin({
         email: user.email,
         uid: user.uid,
+        displayName: user.displayName
       })
     );
   } catch (err) {
@@ -73,20 +75,35 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await signOut(auth);
-    dispatch(clearUser()); // Dispatch the logout action
+    dispatch(clearUser()); 
   } catch (error) {}
 };
 
 export const forgotPassword = (email) => async (dispatch) => {
   dispatch(setForgotLoading());
   try {
-    // Send a password reset email to the user's email address
     await sendPasswordResetEmail(auth, email);
-
-    // You can dispatch a success message to inform the user that the reset email has been sent
     dispatch(setForgotSuccess("Password reset email sent successfully"));
   } catch (err) {
-    // Handle errors here, e.g., dispatch an error message
     dispatch(setForgotError(err.message));
   }
 };
+
+
+export const deleteUserAccount = createAsyncThunk(
+  'auth/deleteUserAccount',
+  async (_, { rejectWithValue }) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      return rejectWithValue('No user is currently logged in.');
+    }
+
+    try {
+      await deleteUser(user);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);

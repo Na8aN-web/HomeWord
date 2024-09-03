@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { FaBible, FaSearch, FaBookOpen, FaGamepad } from "react-icons/fa";
+import { FaBible, FaSearch, FaBookOpen, FaGamepad, FaUser } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
@@ -14,16 +14,15 @@ const Sidebar = ({ isSidebarOpen }) => {
   };
 
 
-   const handleSignOut = async () => {
+  const handleSignOut = async () => {
     dispatch(logout());
-    localStorage.setItem('isAuthenticated','false');
+    localStorage.setItem('isAuthenticated', 'false');
   };
 
   return (
     <div
-      className={`fixed lg:relative h-screen w-full lg:w-1/6 bg-gray-800  text-white transition-transform duration-300 transform z-50 ${
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-      }`}
+      className={`fixed lg:relative h-screen w-full lg:w-1/6 bg-gray-800  text-white transition-transform duration-300 transform z-50 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
     >
       <div className="flex justify-center h-24">
         <h1 className="font-mont text-[24px] text-white font-light p-8 hidden sm:block">
@@ -73,6 +72,17 @@ const Sidebar = ({ isSidebarOpen }) => {
                 <span className="flex items-center p-3 font-mont">
                   <FaGamepad className="mr-2" />{" "}
                   <span className="ml-2">Bible Games</span>
+                </span>
+              </h6>
+            </Link>
+          </li>
+
+          <li className={isActive("/dashboard/Profile")}>
+            <Link href="/dashboard/Profile">
+              <h6 className="text-white hover:text-gray-800 hover:bg-white hover:font-semibold py-1 flex items-center w-full">
+                <span className="flex items-center p-3 font-mont">
+                  <FaUser className="mr-2" />{" "}
+                  <span className="ml-2">My Profile</span>
                 </span>
               </h6>
             </Link>
